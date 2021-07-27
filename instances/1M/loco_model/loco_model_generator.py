@@ -332,12 +332,12 @@ class LocosModelGenerator:
         self.generate_network()
         self.generate_variables()
         self.generate_constraints()
-        dir_name = os.path.basename(os.getcwd())
-        today = date.today()
+        # dir_name = os.path.basename(os.getcwd())
+        # today = date.today()
         self.model.setObjective(self.lmbda.sum("*"), grb.GRB.MAXIMIZE)
         # self.model.setParam('SolFiles', f"solutions_{today}_{dir_name}_loco")
-        self.model.setParam('SolFiles', f"loco_solution_{id}")
-        self.model.setParam('LogFile', f"gurobi_{today}_{dir_name}_loco.log")
+        # self.model.setParam('SolFiles', f"loco_solution_{id}")
+        # self.model.setParam('LogFile', f"gurobi_{today}_{dir_name}_loco.log")
 
         f = grb.tupledict()
         for [t1, t2, l, var_name] in self.f_index_list[:]:
