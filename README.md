@@ -1,5 +1,3 @@
-# Example of a ROMSOC benchmark repository
-
 ## Summary
 This benchmark provides ten test cases for integrated locomotive scheduling and driver rostering problem in rail freight. They are developed in colaboration with DB Cargo Polska S.A.
 
