@@ -1,0 +1,34 @@
+In this section, the requirements for the scripts to run will be given. We will also provide a step-by-step manual for the usage of the benchmarks introduced.
+
+\subsection{Requirements}
+Our code is written in Python 3.7. Hence, the host machine needs to have a distribution of Python 3.7 or newer installed. Apart from packages available in the Python Standard Library, we also used \texttt{numpy} (for some numeric manipulations) and \texttt{networkx} (for the representation of graph objects and graph-related algorithms).
+
+Our model was built with \texttt{gurobipy}, which is Python's API to the routines of the Gurobi solver. We have used Gurobi 9.1 in our work. Although Gurobi is a proprietary software, a free non-commercial license is available to all the members of academic community. 
+
+\subsection{Usage of the benchmarks}
+\paragraph{Step 0: Installation} Provided a Python interpreter and the required packages are available on your machine, you can simply clone from the ROMSOC Github repository: 
+
+\noindent
+\texttt{git clone https://github.com/ROMSOC/benchmarks-mip-rail-scheduling}
+
+\paragraph{Step 1: Choice of instance} Navigate to \texttt{instances} directory. From there, navigate to a directory whose name matches the instance you would like to consider.
+
+\paragraph{Step 2: Run model construction} There are two keywords which need to be supplied when running the scripts:
+\begin{itemize}
+    \item \texttt{\{weekly,monthly\}} -- determines the scope of the model. 
+    If you chose \texttt{1M} as your instance, use \texttt{monthly},  otherwise use \texttt{weekly}.
+    \item \texttt{\{write,nowrite\}} -- determines whether or not the resulting model will be written to an output file \texttt{model.lp}. 
+\end{itemize}
+For example, if you wish to consider the instance \texttt{1W\_1} and to generate an output file, you need to type:
+
+\noindent
+\texttt{python main.py weekly write}
+
+\noindent
+If you wish to consider the instance \texttt{1M} and \textbf{not} to generate an output file, you need to type:
+
+\noindent
+\texttt{python main.py monthly nowrite}
+
+
+

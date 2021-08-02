@@ -1,0 +1,138 @@
+% Zahlenräume
+\newcommand{\F}{\{0, 1\}}
+\newcommand{\FR}{[0, 1]}
+\newcommand{\N}{\mathbbm{N}}
+\newcommand{\Z}{\mathbbm{Z}}
+\newcommand{\Q}{\mathbbm{Q}}
+\newcommand{\R}{\mathbbm{R}}
+
+\newcommand{\B}{\mathbbm{B}}
+\newcommand{\BB}{\mathcal{B}}
+
+\renewcommand{\L}{\mathbbm{L}}
+\newcommand{\LL}{\mathcal{L}}
+
+% Landau-Symbol
+\newcommand{\OO}{\mathcal{O}}
+
+% Operatoren
+\newcommand{\argmain}{\mathrm{\mathop{argmin}}}
+\newcommand{\argmax}{\mathrm{\mathop{argmax}}}
+%\renewcommand{\vec}{\mathop{vec}}
+%\newcommand{\mat}{\mathop{mat}}
+\newcommand{\proj}{\mathrm{\mathop{proj}}}
+\newcommand{\conv}{\mathrm{\mathop{conv}}}
+%\newcommand{\face}[1]{\left\{#1\right\}}
+%\newcommand{\prob}{\mathbb P}
+
+\newcommand{\card}[1]{\lvert #1 \rvert}
+\newcommand{\abs}[1]{\lvert #1 \rvert}
+\newcommand{\norm}[1]{\lVert #1 \rVert}
+\newcommand{\lrnorm}[1]{\left\lVert #1 \right\rVert}
+
+\renewcommand{\binom}[1]{\left(\begin{array}{c} #1 \end{array}\right)}
+\newcommand{\choice}[1]{\left\{\begin{array}{rl} #1 \end{array}\right.}
+\newcommand{\cvector}[1]{\left(\begin{array}{c} #1 \end{array}\right)}
+\renewcommand{\matrix}[2]{\left(\begin{array}{*{#1}{c}} #2 \end{array}\right)}
+
+% Mathematische Akzente
+\newcommand{\sol}[1]{\bar{#1}}
+\newcommand{\arb}[1]{\hat{#1}}
+\newcommand{\nom}[1]{\hat{#1}}
+\newcommand{\pert}[1]{\tilde{#1}}
+\newcommand{\inc}[1]{\tilde{#1}}
+\newcommand{\alt}[1]{\hat{#1}}
+
+% Indexmengen
+\newcommand{\iset}[1]{\mathcal{#1}}
+\newcommand{\iB}{\iset{B}}
+\newcommand{\iT}{\iset{T}}
+\newcommand{\iTO}{\alt{\iset{T}}}
+\newcommand{\iR}{\iset{R}}
+%newcommand{\iP}{\iset{P}}
+
+\newcommand{\set}[1]{\{#1\}}
+
+% Anführungszeichen
+\newcommand{\sqm}[1]{`#1'}
+\newcommand{\qm}[1]{``#1''}
+
+% Kommentare
+\newcommand{\Todo}[1]{\textcolor{red}{#1}}
+
+% Abkürzungen
+\newcommand{\ie}{i.e.\ }
+\newcommand{\Wlog}{w.l.o.g.\ }
+\newcommand{\Wlogc}{w.l.o.g.}
+\newcommand{\WLOGc}{W.l.o.g.}
+\newcommand{\cf}{cf.\ }
+\newcommand{\eg}{e.g.\ }
+\newcommand{\etc}{etc.\ }
+\newcommand{\wrt}{w.r.t.\ }
+
+% Fette Tabelleneinträge
+\newcommand{\cbf}[1]{\textbf{\boldmath{#1}}}
+
+% Optimierungsprobleme
+\newcommand{\st}{\mathrm{s.t.}}
+\newcommand{\find}{\mathrm{find}}
+
+\newlength\mysinglespace
+\setlength\mysinglespace{0.5\baselineskip}
+
+\newlength\objspace
+\setlength\objspace{2\mysinglespace}
+
+\newlength\conspace
+\setlength\conspace{\mysinglespace}
+
+\newlength\cconspace
+\setlength\cconspace{3\mysinglespace}
+
+\newenvironment{mip}{\alignat{4}}{\endalignat}
+\newenvironment{lmip}[1]{\subequations \label{#1} \alignat{4}}{\endsubequations\endalignat}
+\newcommand{\objective}[2]{#1\>\>\>\> & #2 \span\span\span\span\span\span}
+\newcommand{\stconstraint}[4]{\st\>\>\>\> && #1 && \;\;\;\, #2 & \;\;\;\, #3 && \quad \begin{array}{l} #4 \end{array}}
+\newcommand{\constraint}[4]{&& #1 && \;\;\;\, #2 & \;\;\;\, #3 && \quad \begin{array}{l} #4 \end{array}}
+\newcommand{\lobjective}[3]{#1\>\>\>\> & #2 \span\span\span\span\span\span \label{#3}}
+\newcommand{\lstconstraint}[5]{\st\>\>\>\> && #1 && \;\;\;\, #2 & \;\;\;\, #3 && \quad \begin{array}{l} #4 \end{array} \label{#5}}
+\newcommand{\lconstraint}[5]{&& #1 && \;\;\;\, #2 & \;\;\;\, #3 && \quad \begin{array}{l} #4 \end{array} \label{#5}}
+
+%% Allowing for models on multiple pages
+\allowdisplaybreaks
+
+% Changing display of equations in models from 1b to 1.2
+\patchcmd\subequations
+ {\theparentequation\alph{equation}}
+ {\subequationsformat}
+ {}{}
+
+\newcommand{\subequationsformat}{\theparentequation.\arabic{equation}}
+
+
+
+%  styles
+%% Node styles
+\tikzstyle{black_circle}=[fill=none, draw=black, shape=circle, tikzit fill=white]
+
+%% Edge styles
+\tikzstyle{black_edge}=[-]
+\tikzstyle{blue_edge}=[-, draw=blue]
+\tikzstyle{red_edge}=[-, draw=red]
+\tikzstyle{black_arrow}=[fill=none, ->]
+
+
+
+
+% Gleichungsarrays
+
+
+% Theoremumgebungen
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{example}[theorem]{Example}
+

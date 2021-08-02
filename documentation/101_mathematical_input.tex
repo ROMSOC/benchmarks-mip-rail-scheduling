@@ -1,0 +1,117 @@
+\subsection{A joint model for locomotive scheduling and driver rostering in rail freight transport}
+
+We model the joint locomotive scheduling and driver rostering problem as a combination of a set packing problem with compatibility, conflict and multiple-choice constraints and a multicommodity flow problem.
+Our objective is to maximize the number of trains performed, i.e.\ to maximize the number of trains for which both a locomotive and a driver were found. The inputs to the model are: a set $T$ of trains to be performed, a set of locomotives $\mathscr{L}$ and a set of drivers $D$. To denote the sets of locomotives compatible with a driver $d \in D$ or a train $t \in T^d$, we use $\mathscr{L}^d$ and $\mathscr{L}^t$ respectively. Let $D^l$ and $D^t$  represent a set of drivers compatible with a locomotive $l \in \mathscr{L}$ or a train $t \in T$ respectively. Finally, let $T^l$ and $T^d$ be a set of trains compatible with a locomotive $l \in \mathscr{L}$ or a driver $d \in D$ respectively.
+
+\paragraph{Sets required for constraints construction}
+We also introduce a number of sets required to build the constraints of the model. Table~\ref{tab:sets_descriptions} presents a summary of the sets required for constraint construction. Their exact definitions can be found in the Appendix A.
+\begin{table}[ht]
+
+\begin{tabular}{p{0.2\linewidth} | p{0.7\linewidth}}
+\toprule
+Name                          & Description                                                                                              \\ \midrule
+$T^{B+}_{t, d}$               & Trains which cannot be assigned to a driver $d$ if $t$ is his last job in a working day                  \\ \hline
+$T^{35h}_{t, d}$              & Trains which cannot be assigned to a driver $d$ if $t$ is his last job before a weekly 35h break         \\ \hline
+$T^{B-}_{t, d}$               & Trains which cannot be assigned to a driver $d$ if $t$ is his first job in a working day                 \\ \hline
+$T^{week}_{w, d}$             & Trains which belong to a calculation week $w$                                                            \\ \hline
+$T^{sunday}_{w, d}$           & Trains which belong to a Sunday falling on a week $w$                                                    \\ \hline
+$T^{shift\_beginning}_{t, d}$ & Past trains which could have been assigned to driver $d$ if he is assigned to a job $t$.                 \\ \hline
+$T^{shift\_end}_{t, d}$       & Future trains which can be assigned to driver $d$ if he is assigned to a job $t$.                        \\ \hline
+$T^{time}_{t, d}$             & Trains which are feasible for driver $d$ and in time conflict with the train $t$                         \\ \hline
+$T^{after\_break}_{t, d}$     & Trains which could be the first jobs of the next shift after the 11h break following train $t$           \\ \hline
+$T^{before\_break}_{t, d}$    & Trains which could have been the last job of the previous shift before the 11h break preceding train $t$ \\ \hline
+$T^{next\_l}_{t, l}$          & Future trains which could be assigned to locomotive $l$ if is assigned to a job $t$                      \\ 
+\bottomrule
+
+\end{tabular}
+\caption{Descriptions of the sets required for constraint construction}
+\label{tab:sets_descriptions}
+\end{table}
+
+\subsubsection{Multi-commodity flow part of the model}
+\label{subsubsec:MulticommodityFlow}
+We consider the set $\mathscr{L} = \{l_1, l_2, l_3, \ldots \}$ of locomotives to be modeled as commodities which need to be "pushed" through a directed graph $G = (V, A)$, which could be defined as $V\coloneqq T$ and 
+\begin{equation}
+    A \coloneqq \{(t_1, t_2): t_1 \in T^l \quad  \land \quad  t_2 \in T^{next\_l}_{t, l} \quad \forall \enspace l \in \mathscr{L}\}.
+\end{equation}
+
+
+Let us also define $\Sigma$ and $\Theta \in V$ as the source and sink nodes of the graph $G$, respectively.
+Additionally let us assume that we have one item of each commodity.
+Further, let each arc $a \in A$ have unit capacity i.e.\ it can host at most one commodity. We also assume the limited compatibility of each arc with regard to commodities -- that means we may not be allowed to push every commodity through every arc.
+
+\subsubsection{Decision variables}
+\label{subsubsec:Decision variables}
+In the model, we need to make sure that each train is staffed by exactly one suitable driver and one suitable locomotive. These decisions are modelled with binary variables $x^t_{d}$ (for drivers) and $f^{t_1, t_2}_{l}$ (for locomotives).
+
+To comply with the working time requirements, we need to distinguish between the first job in a shift, denoted by a binary variable $y^t_d$, the last job in a shift before a short (11 hour) break, denoted by a binary variable $v^t_d$ and the last job in a shift before a long (35 hour) break, denoted by a binary variable $z^t_d$. We also need to know whether a driver has worked on a given Sunday. This is denoted by a binary variable $h^{w}_{d}$.
+
+Finally, for modelling purposes we also need to know which trains $t$ are the first and the last job for drivers in the planning period. We do that with the help of binary variables $\alpha^{t}_d$ and $\omega^{t}_d$, which denote that the train $t$ is respectively the first or the last one in the planning period for a driver $d \in D$. All the variables are summarized in Table \ref{tab:variable_definitions}.
+\begin{table}[htbp]
+ \caption{Summary of decision variables used in the model}
+  \centering
+  \begin{tabular}{lll}
+  	\toprule
+  	Name            & Description                                                       & Type   \\ \midrule
+  	$f^{u, v}_l$    & Trains $u, v$ are served by a locomotive $l$                      & binary \\
+  	$x^t_{d}$       & Train  $t$ is served by a driver $d$                              & binary \\
+  	$y^t_{d}$       & Train $t$ is the first job of a driver $d$ in their shift         & binary \\
+  	$v^t_{d}$       & Train $t$ is the last job of a driver $d$ before a 12h break      & binary \\
+  	$z^t_{d}$       & Train $t$ is the last job of a driver $d$ before a 35h break      & binary \\
+  	$\alpha^{t}_d$  & Train $t$ is the first train of driver $d$ in the planning period & binary \\
+  	$\omega^{t}_d$  & Train $t$ is the last train of driver $d$ in the planning period  & binary \\
+  	$h^{w}_{d}$      & Driver $d$ has worked on the Sunday of the week $w$               & binary \\ \bottomrule
+  \end{tabular}
+  \label{tab:variable_definitions}
+\end{table}
+
+
+\newpage
+\subsubsection{Model formulation}
+\begin{lmip}{eq:joint-model}
+\lobjective{\max}{\sum_{t \in T} \sum_{\mathclap{\substack{ d \in D^t\\}}} x^t_d}{eq:joint-model-objective}\\
+\lstconstraint{x^t_d}{\leq}{\sum_{\mathclap{\substack{l \in \mathscr{L}^d \cap \mathscr{L}^t \\ u: (t, u) \in E}}}  f^{t, u}_l} {(\forall t \in T)(\forall d \in D^t)} {eq:joint-model-locoDriverCompatibilityConstraint}\\
+\lconstraint{\sum_{v: (t, v) \in E} f^{t, v}_l}{\leq}{ \sum_{d \in D^l \cap D^t} x^t_d}{(\forall t \in T \setminus \{A\})\enspace(\forall l \in \mathscr{L}^t)} {eq:joint-model-driverLocoCompatibilityConstraint}\\
+\lconstraint{\sum_{d \in D^t} x^t_d} {\leq} {1} {(\forall t \in T)} {eq:joint-model-driverOnlyOneDriverConstraint}\\
+\lconstraint{\sum_{t \in T^d} \alpha^t_d}{\leq}{1}{(\forall d \in D)} {eq:joint-model-driverOnlyOneFirstJobConstraint}\\
+\lconstraint{\sum_{t \in T^d} \omega^t_d}{\leq}{1}{(\forall d \in D)} {eq:joint-model-driverOnlyOneLastJobConstraint}\\
+\lconstraint{x^t_d + x^{t_1}_d}{\leq}{1}{(\forall d \in D)\enspace(\forall t \in T^d)\enspace(\forall t_1 \in T^{time}_{t, d})} {eq:joint-model-driverTimeConflictConstraint}\\
+\lconstraint{y^t_d + x^{t_1}_d}{\leq}{1}{(\forall d \in D)\enspace(\forall t \in T^d)\enspace(\forall t_1 \in T^{B-}_{t, d})} {eq:joint-model-driverBreakBackwardsConstraint}\\
+\lconstraint{v^t_d + x^{t_1}_d}{\leq}{1}{(\forall d \in D)\enspace(\forall t \in T^d)\enspace(\forall t_1 \in T^{B+}_{t, d})} {eq:joint-model-driverBreakForwardsConstraint}\\
+\lconstraint{z^t_d + x^{t_1}_d}{\leq}{1}{(\forall d \in D)\enspace(\forall t \in T^d)\enspace(\forall t_1 \in T^{35h}_{t, d})} {eq:joint-model-driverLongBreakForwardsConstraint}\\
+\lconstraint{v^t_d}{\leq}{\omega^t_d + \sum_{t_1 \in T^{after\_break}_{t,d}} y^{t_1}_d}{(\forall d \in D)\enspace(\forall t \in T^d)} {eq:joint-model-driverLastJobConstraint}\\
+\lconstraint{y^t_d}{\leq}{\alpha^t_d + \sum_{t_1 \in T^{before\_break}_{t,d}} v^{t_1}_d}{(\forall d \in D)\enspace(\forall t \in T^d)} {eq:joint-model-driverFirstJobConstraint}\\
+\lconstraint{x^{t}_d}{\leq}{\sum_{t_1 \in T^{shift\_beginning}_{t, d}} y^{t_1}_{d}}{(\forall d \in D)\enspace(\forall t \in T^d)} {eq:joint-model-driverEnforcingFirstJobInShift}\\
+\lconstraint{x^{t}_d}{\leq}{\sum_{t_1 \in T^{shift\_end}_{t, d}} v^{t_1}_{d}}{(\forall d \in D)\enspace(\forall t \in T^d)} {eq:joint-model-driverEnforcingLastJobInShift}\\
+\lconstraint{v^{t}_d}{\leq}{\sum_{t_1 \in T^{shift\_beginning}_{t, d}} y^{t_1}_{d}}{(\forall d \in D)\enspace(\forall t \in T^d)} {eq:joint-model-driverEnforcingMaxShiftLength}\\
+\lconstraint{x^t_d}{\leq}{\sum_{t_1 \in T^{week}_{t, d}} z^{t_1}_{d}}{(\forall d \in D)\enspace(\forall t \in T^d)} {eq:joint-model-driverEnforcingLongBreak}\\
+\lconstraint{\alpha^t_d}{\leq}{\sum_{t_1: t_1 \geq t} \omega^{t_1}_{d}}{(\forall d \in D)\enspace(\forall t \in T^d)} {eq:joint-model-driverEnsuringDriverShiftContinuity}\\
+\lconstraint{x^t_d}{\leq}{h^w_d}{(\forall d \in D)\enspace(\forall t \in T^{sunday}_{w, d})} {eq:joint-model-driverXenforcesH}\\
+\lconstraint{\sum_{w \in T^d} h^w_d}{\leq}{3}{(\forall d \in D)}{eq:joint-model-driverAtMostThreeWorkingSundays}\\
+\lconstraint{y^t_d}{\leq}{x^t_d}{(\forall d \in D)}{eq:joint-model-driverYenforcesX}\\
+\lconstraint{v^t_d}{\leq}{x^t_d}{(\forall d \in D)}{eq:joint-model-driverVenforcesX}\\
+\lconstraint{\alpha^t_d}{\leq}{x^t_d}{(\forall d \in D)}{eq:joint-model-driverAlphaenforcesX}\\
+\lconstraint{\omega^t_d}{\leq}{x^t_d}{(\forall d \in D)}{eq:joint-model-driverOmegaenforcesX}\\
+\lconstraint{\sum_{v \in \delta^{in}(t) \cap \; T^l} f^{v, t}_{l} - \sum_{w \in \delta^{out}(t) \cap \; T^l} f^{t, w}_{l}}{=}{0}{(\forall t \in T)\enspace(\forall l \in \mathscr{L}^t)}{eq:joint-model-locoFlowConservationCommodity}\\
+\lconstraint{\sum_{l \in \mathscr{L}^t \cap \mathscr{L}^{t_1}} f^{t, t_1}_{l}}{\leq}{1}{(\forall (t, t_1) \in A)}{eq:joint-model-arcCapacity}\\
+\lconstraint{\sum_{l \in \mathscr{L}^t} \sum_{t_0 \in \delta^{in}(t) \cap T^l} f^{t_0, t}_{l}}{\leq}{1}{(\forall t \in T)}{eq:joint-model-inboundCapacity}\\
+\lconstraint{\sum_{t: (\Sigma, t) \in E \land t \in T^l} f^{\Sigma, t}_{l}}{\leq}{1}{(\forall l \in \mathscr{L})}{eq:joint-model-locoCapOnFlow}\\
+\lconstraint{\sum_{t_1 \in T^l} f^{\Sigma, t_1}_{l} - \sum_{t_2 \in T^l} f^{t_2, \Theta}_{l}}{=}{0}{(\forall l \in \mathscr{L})}{eq:joint-model-locoArrivalAtSink}\\
+\lconstraint{x^t_d}{\in}{\F}{(\forall t \in T)\enspace(\forall d \in D^t)}{eq:joint-model-xBinary}\\
+\lconstraint{y^t_d}{\in}{\F}{(\forall t \in T)\enspace(\forall d \in D^t)}{eq:joint-model-yBinary}\\
+\lconstraint{v^t_d}{\in}{\F}{(\forall t \in T)\enspace(\forall d \in D^t)}{eq:joint-model-vBinary}\\
+\lconstraint{z^t_d}{\in}{\F}{(\forall t \in T)\enspace(\forall d \in D^t)}{eq:joint-model-zBinary}\\
+\lconstraint{\alpha^t_d}{\in}{\F}{(\forall t \in T)\enspace(\forall d \in D^t)}{eq:joint-model-alphaBinary}\\
+\lconstraint{\omega^t_d}{\in}{\F}{(\forall t \in T)\enspace(\forall d \in D^t)}{eq:joint-model-omegaBinary}\\
+\lconstraint{f^{t_1, t_2}_l}{\in}{\F}{(\forall (t_1, t_2) \in E)\enspace(\forall l \in \mathscr{L}^{t_1} \cap \mathscr{L}^{t_2})}{eq:joint-model-fBinary}\\
+\end{lmip}
+\noeqref{eq:joint-model-yBinary}
+\noeqref{eq:joint-model-vBinary}
+\noeqref{eq:joint-model-zBinary}
+\noeqref{eq:joint-model-alphaBinary}
+\noeqref{eq:joint-model-omegaBinary}
+
+With objective function~\eqref{eq:joint-model-objective}, we maximize the number of trains running. Constraints~\eqref{eq:joint-model-locoDriverCompatibilityConstraint} and~\eqref{eq:joint-model-driverLocoCompatibilityConstraint} make sure that either both a locomotive and a driver or none of them are assigned to the train; they also take care that driver and locomotive are mutually compatible. With~\eqref{eq:joint-model-driverOnlyOneDriverConstraint}, we ensure that at most one driver is assigned to a train. Constraints~\eqref{eq:joint-model-driverOnlyOneFirstJobConstraint} and~\eqref{eq:joint-model-driverOnlyOneLastJobConstraint} ensure that there is no more than one schedule per driver in the plan. Using constraint~\eqref{eq:joint-model-driverTimeConflictConstraint}, we ensure that no two trains which run simultaneously are assigned to the same driver. With~\eqref{eq:joint-model-driverBreakBackwardsConstraint} and~\eqref{eq:joint-model-driverBreakForwardsConstraint} we model that the minimal length of a short break amounting to 11 hours is not violated. Additionally, with~\eqref{eq:joint-model-driverLongBreakForwardsConstraint} we ensure the integrity of the long, 35-hour break.  Using~\eqref{eq:joint-model-driverLastJobConstraint}, we make sure that each last job $t$ in a shift is succeeded by a first job of the next shift, or that the job $t$ is the last one assigned to driver $d$ in the plan. Similarly, with~\eqref{eq:joint-model-driverFirstJobConstraint} we model that each first job $t$ in a shift was predecessed by a last job of the previous shift, or that the job $t$ is the first one assigned to driver $d$ in the plan. Constraints~\eqref{eq:joint-model-driverEnforcingFirstJobInShift}, ~\eqref{eq:joint-model-driverEnforcingLastJobInShift} and~\eqref{eq:joint-model-driverEnforcingMaxShiftLength} ensure the integrity of drivers' shifts and model the maximal length of a shift amounting to 12 hours. Using~\eqref{eq:joint-model-driverEnforcingLongBreak} we make sure that at least one long break per week is assigned to each driver in every week falling in the planning period. With the help of~\eqref{eq:joint-model-driverEnsuringDriverShiftContinuity} we make sure that the last job of a driver in the plan is the same or a later one as the first job in the plan. Using constraints~\eqref{eq:joint-model-driverXenforcesH} and~\eqref{eq:joint-model-driverAtMostThreeWorkingSundays} we make sure that a driver works on at most three Sundays in a given planning period. Constraints~\eqref{eq:joint-model-driverYenforcesX},~\eqref{eq:joint-model-driverVenforcesX},~\eqref{eq:joint-model-driverAlphaenforcesX} and~\eqref{eq:joint-model-driverOmegaenforcesX} tie each "indicator" variable to the actual decision variable. 
+
+For the locomotive part of the model,~\eqref{eq:joint-model-locoFlowConservationCommodity} ensures that a locomotive that serves a train $t$ arrives at its origin station and in the due time, and similarly it later departs from train $t$'s arrival station. Using~\eqref{eq:joint-model-arcCapacity} we ensure that at most one locomotive serves each train. With the use of ~\eqref{eq:joint-model-inboundCapacity}, we make sure that an appropriate successor and predecessor are chosen for a locomotive $l \in \mathscr{L}$ given it serves a train $t \in T^l$. We use ~\eqref{eq:joint-model-locoCapOnFlow} to warrant that at most one first train is chosen for each locomotive. Constraint~\eqref{eq:joint-model-locoCapOnFlow} ensures that each locomotive has a unique first and a unique last train in a plan. With the help of~\eqref{eq:joint-model-locoArrivalAtSink} we ensure the integrity of the locomotive schedule.
+Finally, constraints~\eqref{eq:joint-model-xBinary} to~\eqref{eq:joint-model-fBinary} ensure that the decision variables are binary.

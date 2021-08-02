@@ -1,0 +1,8 @@
+\subsection{Decomposition-based solution algorithm}
+In this section, we will present a solution algorithm for the integrated locomotive scheduling and driver rostering problem. Its schematic representation can be seen in Figure~\ref{flow:flowchart}. Its exact definition will be introduced in a future update to this deliverable. Here, we will limit ourselves to a description of its major components. 
+
+The most important part of the algorithm is to decompose the large model introduced above into two smaller ones. This is done by relaxing constraints \ref{eq:joint-model-locoDriverCompatibilityConstraint} and \eqref{eq:joint-model-driverLocoCompatibilityConstraint}. A number of computational experiments has shown that one of the decomposed subproblems is far easier to solve than the other. Hence, we develop a number of valid inequality classes for the easier of the subproblems, which will result in its solution being feasible in terms of the other one. These inequalities enabled us to come up with feasible solutions for the instances supplied by our industrial partner. We also developed a long-break heuristic, whose aim is to come up with a partial solution to one of the decomposed subproblems, and hence reduce its computation time. 
+
+Additionally, to ensure the global feasibility of the algorithm's solution, we will take advantage of the Combinatorial Benders' Cuts (as introduced by \cite{codato_combinatorial_2006}). These cuts will remove any infeasible solution that was not cut off by the valid inequalities we derived.
+
+\input{04_solution_approach/flowchart}

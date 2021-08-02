@@ -1,0 +1,40 @@
+Our industry partner provided us with a high-quality real-world data set for the problem. They represent the trains the industrial partner planned to serve in February 2020, as well as the information about drivers and locomotives which was up to date on February 14, 2020.  It comprises six files -- we will now describe each in detail.
+
+\paragraph{Order book} It is a list of all the trains that need to be performed, including their origin and destination stations, as well as departure and arrival times and assignment to calculation weeks. In the supplied instance, there are four calculation weeks, starting on Saturday and lasting till next Friday. It is contained in file \texttt{trains.csv}.
+
+\paragraph{List of drivers} This file comprises the list of all the drivers, including their licenses to locomotive types, knowledge of routes and assignments to regions. It is included in file \texttt{drivers.csv}.
+
+\paragraph{List of locomotives} In this file, information about all the available locomotives is included. In particular, it comprises their class, source of energy (electric / diesel) and power. For each train powered by a locomotive which is not the property of the industrial partner, an artificial entry is made, stipulating only the required locomotive class. All that information can be found in the file \texttt{unique\_locos.csv}.
+
+\paragraph{Distances between stations} This file includes estimated distances and travel times between all the stations present in the order book. This information is required to be able to allow drivers to move between various stations while not driving a train during their shift. These times were estimated using the API of Google Maps. They were up to date as of February 14, 2020. These distances and travel times are included in the file \texttt{distance\_matrix.csv}.
+
+\paragraph{Assignment of stations to regions} Here, each station present in the order book is assigned to one of the driver regions. It is included in file \texttt{station\_region\_mapping.csv}.
+
+\paragraph{Assignment of drivers to regions} This is an auxiliary source of information about the assignment of drivers to planning regions. It It is included in file \texttt{driver\_region\_mapping.csv}.
+
+
+Based on the data we received, we have developed ten instances. Table \ref{tab:instance_summary} below presents a summary of parameters of each instance we develop.
+
+
+
+\begin{table}[ht]
+  \centering
+  \caption{Overview of instance parameters and model generation times}
+    \begin{tabular}{lrrrrr}
+    \toprule
+    instance & \multicolumn{1}{l}{\# days} & \multicolumn{1}{l}{\# trains} & \multicolumn{1}{l}{\# drivers} & \multicolumn{1}{l}{\# locomotives} \\
+    \midrule
+    1M    & 29    & 2551  & 217   & 112 \\
+    3W\_1 & 21    & 1854  & 217   & 112  \\
+    3W\_2 & 21    & 1838  & 217   & 112 \\
+    2W\_1 & 14    & 1239  & 217   & 112  \\
+    2W\_2 & 14    & 1242  & 217   & 112  \\
+    2W\_3 & 14    & 1228  & 217   & 112  \\
+    1W\_1 & 7     & 629   & 217   & 112  \\
+    1W\_2 & 7     & 610   & 217   & 112  \\
+    1W\_3 & 7     & 615   & 217   & 112 \\
+    1W\_4 & 7     & 613   & 217   & 112  \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:instance_summary}%
+\end{table}

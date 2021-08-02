@@ -1,0 +1,25 @@
+\documentclass{article}
+\input{000_config_files/Packages}
+\input{000_config_files/Makros}
+
+
+\begin{document}
+
+
+\section{Introduction}
+\input{01_introduction}
+\input{101_mathematical_input}
+
+\section{Input data description}
+\input{103_input_data_description}
+
+\section{Step-by-step procedure}
+\input{104_step_by_step}
+
+\section{Description of output data}
+If the user wishes so, the benchmarks introduced may generate an \texttt{model.lp} file which contain a text description of the integer model. It presents the objective function, variables and constraints of each model. The \texttt{.lp} files can be opened with any text editor (such as Notepad). 
+We generally advise against storing models for larger instances, since their size may easily grow to gigabytes, which will render them useless for manual browsing. 
+\newpage
+\bibliographystyle{apalike}
+\bibliography{biblio.bib}  
+\end{document}
