@@ -1,4 +1,6 @@
 ## Summary
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5171817.svg)](https://doi.org/10.5281/zenodo.5171817)
+
 This benchmark provides ten test cases for integrated locomotive scheduling and driver rostering problem in rail freight. They are developed in colaboration with DB Cargo Polska S.A.
 
 ## Description
