@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Bärmann, Andreas"
+  given-names: "Andreas"
+  orcid: "https://orcid.org/0000-0000-0000-0000"
+- family-names: "Martin"
+  given-names: "Alexander"
+  orcid: "https://orcid.org/0000-0000-0000-0000"
+- family-names: "Staszek"
+  given-names: "Jonasz"
+  orcid: "https://orcid.org/0000-0002-5822-3114"
+title: "Benchmarks for Integrated Locomotive Scheduling and Driver Rostering in rail freight"
+version: 1.0.0
+doi: 10.5281/zenodo.5171817
+date-released: 2021-01-07
+url: "https://github.com/ROMSOC/benchmarks-mip-rail-scheduling"

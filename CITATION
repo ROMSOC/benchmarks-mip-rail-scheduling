@@ -1,9 +1,0 @@
-@MISC{benchmarks-mip-rail-scheduling ,
-key = {BenchmarksMIPRailScheduling},
-author = {Bärmann, Andreas and Martin, Alexander and Staszek, Jonasz},
-title = {{example-repor} -- {Benchmarks for Integrated Locomotive Scheduling and Driver Rostering in rail freight} (Version 0.1)},
-month = July,
-year = 2021,
-doi = {10.xxxx/zenodo.xxxxxxx},
-
-}
