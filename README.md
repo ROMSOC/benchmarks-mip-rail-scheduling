@@ -13,7 +13,7 @@ A step-by-step guide on how to use these benchmarks can be found in ``documentat
 
 ## Benchmark execution
 The benchmark case can be run using the script files ``main.py`` at each instance subfolder. Alternatively, please use the following link to run a user-friendly Jupyter Notebook (``Benchmark.ipynb``) with different instances. For instance, Benchmark ``1W_4`` is available at:
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ROMSOC/benchmarks-mip-rail-scheduling/HEAD?labpath=source/Benchmark.ipynb)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ROMSOC/benchmarks-mip-rail-scheduling/HEAD?labpath=Benchmark.ipynb)
 
 ## Disclaimer
 In downloading this SOFTWARE you are deemed to have read and agreed to the following terms:
