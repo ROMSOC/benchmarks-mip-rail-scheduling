@@ -15,13 +15,13 @@ A step-by-step guide on how to use these benchmarks can be found in ``documentat
 The benchmark case can be run using the script files ``main.py`` at each instance subfolder. 
 
 ## Run Jupyter notebooks 
-The entire benchmark repository can be executed in a provided Docker container where a full installation of Intel OneAPI is available. Once you have clone or downloaded this repository, to build the container just type
+The entire benchmark repository can be executed in a provided Docker container where a full installation of Gurobi is available. Once you have clone or downloaded this repository, to build the container just type
 ```bash
 docker build -t benchmarks-mip-rail-scheduling . 
 ```
 and for running it locally:
 ```bash
-docker run -u 0 -it --rm -p 8888:8888 benchmarks-mip-rail-scheduling jupyter-lab --ip=0.0.0.0 --port=8888 --allow-root
+docker run -it --rm -p 8888:8888 benchmarks-mip-rail-scheduling jupyter-lab --ip=0.0.0.0 --port=8888 --allow-root
 ```
 Alternatively, please use the following link to run a user-friendly Jupyter Notebook (``Benchmark.ipynb``) with different instances. For instance, Benchmark ``1W_4`` is available at:
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ROMSOC/benchmarks-mip-rail-scheduling/HEAD?labpath=Benchmark.ipynb). Please, notice that mybinder cloud computations are limited to 2GB of RAM memory.
