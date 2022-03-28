@@ -2,7 +2,7 @@
 <img src="images/romsoclogo-logo.png" alt="EU Flag"  width="150"/>
 
 ## Benchmarks for MIP rail scheduling
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5171817.svg)](https://doi.org/10.5281/zenodo.5171817)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5171817.svg)](https://doi.org/10.5281/zenodo.5171817) [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ROMSOC/benchmarks-mip-rail-scheduling/HEAD?labpath=Benchmark.ipynb)
 
 This benchmark provides ten test cases for integrated locomotive scheduling and driver rostering problem in rail freight. They are developed in colaboration with DB Cargo Polska S.A.
 
